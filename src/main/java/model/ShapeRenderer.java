@@ -1,5 +1,6 @@
 package model;
 
+
 import java.util.List;
 
 public class ShapeRenderer {
@@ -14,11 +15,14 @@ public class ShapeRenderer {
                 renderRectangle(rectangle);
             } else if (shape instanceof Triangle triangle) {
                 renderTriangle(triangle);
+            } else if (shape instanceof Circle circle) {
+                renderCircle(circle);
             } else {
                 System.out.println("Unknown shape. Cannot render.");
             }
         }
     }
+
 
     private void renderRectangle(Rectangle rectangle) {
         int width = (int) rectangle.width;
@@ -47,7 +51,26 @@ public class ShapeRenderer {
         }
     }
 
-    private String getColorCode(Color color) {
+    private void renderCircle(Circle circle) {
+        int radius = (int) circle.getRadius();
+        String colorCode = getColorCode(circle.color);
+
+
+        for (int y = -radius; y <= radius; y++) {
+            System.out.print(colorCode);
+            for (int x = -radius; x <= radius; x++) {
+                if (x * x + y * y <= radius * radius) {
+                    System.out.print("*");
+                } else {
+                    System.out.print(" ");
+                }
+            }
+            System.out.println("\033[0m");
+        }
+    }
+
+
+    public String getColorCode(Color color) {
         int red = color.red();
         int green = color.green();
         int blue = color.blue();
